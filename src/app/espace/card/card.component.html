@@ -1,5 +1,12 @@
-<div class="bg-[#ededed] h-[90%] rounded-[9px] shadow-[0px_4px_4px_1px_rgba(0,0,0,0.24)]">
-    <div class="p-2 font-medium text-[15px] border-b border-black/[0.24]">
-        A Faire
+<div
+  class="bg-[#ededed] h-[90%] rounded-[9px] shadow-[0px_4px_4px_1px_rgba(0,0,0,0.24)]"
+>
+  <div class="p-2 font-medium text-[15px] border-b border-black/[0.24]">
+    {{ header }}
+  </div>
+  <ng-scrollbar style="height: 500px">
+    <div class="pl-2 pr-3">
+      <app-task *ngFor="let item of taskList" [task]="item" cdkDrag></app-task>
     </div>
+  </ng-scrollbar>
 </div>

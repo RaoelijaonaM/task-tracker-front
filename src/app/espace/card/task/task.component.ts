@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-
+import { AfterViewInit, Component, OnInit,Input } from '@angular/core';
+import * as feather from 'feather-icons';
+import { Task } from './task.model';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.css']
+  styleUrls: ['./task.component.css'],
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, AfterViewInit {
+  @Input() task:Task = new Task()
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  ngAfterViewInit(): void {
+    feather.replace( );
   }
-
 }

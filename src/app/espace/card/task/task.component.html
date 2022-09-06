@@ -1,1 +1,45 @@
-<p>task works!</p>
+<div
+  class="w-full bg-white min-h-[120px] p-2 mt-4 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] relative"
+>
+  <div class="flex relative">
+    <!-- <div class="w-[70px] h-[6px] bg-[#e32525] rounded-[4px]"></div> -->
+    <div
+      [ngClass]="{
+        'bg-[#e32525]': task.STATUS === 0,
+        'bg-[#43597D]': task.STATUS === 10,
+        'bg-[#0b8e01]': task.STATUS === 1
+      }"
+      class="w-[70px] h-[6px] rounded-[4px]"
+    ></div>
+    <button class="absolute right-0">
+      <img src="../../../../assets/images/three-dots.svg" />
+    </button>
+  </div>
+  <div class="text-[12px] font-medium pt-1">{{ task.ID_TACHED }}</div>
+  <div class="w-[20px] h-[20px] bg-orange-500 rounded-full">
+    <!-- image -->
+  </div>
+  <div class="w-full grid grid-cols-2 absolute bottom-1 gap-1">
+    <div class="flex">
+      <div>
+        <i class="w-[22px] h-[22px] mt-1" data-feather="calendar"></i>
+      </div>
+      <div class="pl-1">
+        <div class="text-[11px] font-medium">{{task.DATE_DEBUT | date:'d MMM, y'}}</div>
+        <div class="text-[11px] font-light italic">Debut</div>
+      </div>
+    </div>
+    <div class="flex">
+      <div>
+        <i
+          class="text-rose-800 w-[22px] h-[22px] mt-1"
+          data-feather="calendar"
+        ></i>
+      </div>
+      <div class="pl-1">
+        <div class="text-[11px] font-medium">{{task.DATE_FIN | date:'d MMM, y' }} </div>
+        <div class="text-[11px] font-light italic">fin</div>
+      </div>
+    </div>
+  </div>
+</div>
