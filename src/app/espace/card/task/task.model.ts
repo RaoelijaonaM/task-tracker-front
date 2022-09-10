@@ -5,5 +5,8 @@ export class Task {
   ID_ESPACE!: string;
   DATE_DEBUT!: Date;
   DATE_FIN!: Date;
-  STATUS!:number;
+  STATUS!: number;
+  ID_ALARME!: string;
+  ID_REPETITION!: string;
+  DESCRIPTION!: string;
 }

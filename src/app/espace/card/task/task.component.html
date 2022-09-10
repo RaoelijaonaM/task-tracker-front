@@ -11,7 +11,7 @@
       }"
       class="w-[70px] h-[6px] rounded-[4px]"
     ></div>
-    <button class="absolute right-0">
+    <button class="absolute right-0" (click)="openDetail()">
       <img src="../../../../assets/images/three-dots.svg" />
     </button>
   </div>
@@ -22,22 +22,26 @@
   <div class="w-full grid grid-cols-2 absolute bottom-1 gap-1">
     <div class="flex">
       <div>
-        <i class="w-[22px] h-[22px] mt-1" data-feather="calendar"></i>
+        <i class="w-[22px] h-[22px] mt-1" style="stroke-width: 1px!important;" data-feather="calendar"></i>
       </div>
       <div class="pl-1">
-        <div class="text-[11px] font-medium">{{task.DATE_DEBUT | date:'d MMM, y'}}</div>
+        <div class="text-[11px] font-medium">
+          {{ task.DATE_DEBUT | date: "d MMM, y" }}
+        </div>
         <div class="text-[11px] font-light italic">Debut</div>
       </div>
     </div>
     <div class="flex">
       <div>
         <i
-          class="text-rose-800 w-[22px] h-[22px] mt-1"
+          class="text-rose-800 w-[22px] h-[22px] mt-1" style="stroke-width: 1px!important;"
           data-feather="calendar"
         ></i>
       </div>
       <div class="pl-1">
-        <div class="text-[11px] font-medium">{{task.DATE_FIN | date:'d MMM, y' }} </div>
+        <div class="text-[11px] font-medium">
+          {{ task.DATE_FIN | date: "d MMM, y" }}
+        </div>
         <div class="text-[11px] font-light italic">fin</div>
       </div>
     </div>

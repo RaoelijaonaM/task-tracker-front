@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://api-lartic.herokuapp.com/api/',
+  api: 'http://192.168.88.23:3000/api/',
 };
 
 /*

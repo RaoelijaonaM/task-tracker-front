@@ -9,7 +9,6 @@ import { Task } from '../espace/card/task/task.model';
   providedIn: 'root',
 })
 export class TaskService {
-  taches$!: Observable<Task[]>;
   url = environment.api;
   constructor(private http: HttpClient) {}
 
@@ -20,8 +19,18 @@ export class TaskService {
       .pipe(map((res) => res.data as Task[]));
   }
   updateTask(taskId: string, task: Task): Observable<any> {
-    let query = this.url + 'task/' + taskId
-    console.log("put");
+    let query = this.url + 'task/' + taskId;
+    console.log('put');
+    return this.http.put(query, task);
+  }
+  getTaskDetail(id: string): Observable<Task> {
+    return this.http
+      .get<any>(this.url + 'task/' + id)
+      .pipe(map((res) => res.data[0] as Task));
+  }
+  updateTaskDetail(task: Task): Observable<any> {
+    console.log('service**********', task);
+    let query = this.url + 'taskDetail/' + task.ID_TACHE;
     return this.http.put(query, task);
   }
 }

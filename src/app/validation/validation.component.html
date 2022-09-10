@@ -1,0 +1,8 @@
+<h1 class="border-b" mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <p>{{data.message}}</p>
+</div>
+<div mat-dialog-actions class="flex gap-[25%] text-white mt-2">
+  <button mat-button class="bg-red-700 w-[100px] h-[50px] drop-shadow-2xl" (click)="onNoClick()">Annuler</button>
+  <button mat-button class="bg-green-700 w-[100px] h-[50px] drop-shadow-2xl" (click)="onOkClick()">Valider</button>
+</div>

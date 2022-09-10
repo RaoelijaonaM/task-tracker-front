@@ -1,12 +1,9 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from '../shared/task.service';
+import { ValidationComponent } from '../validation/validation.component';
 import { Task } from './card/task/task.model';
-
 @Component({
   selector: 'app-espace',
   templateUrl: './espace.component.html',
@@ -17,7 +14,7 @@ export class EspaceComponent implements OnInit {
   taskTodo!: Task[];
   taskProgress!: Task[];
   taskFinished!: Task[];
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getTasksList();
@@ -39,6 +36,7 @@ export class EspaceComponent implements OnInit {
     });
   }
   updateStatus(identity: string, task: Task) {
+    console.log(task);
     if (identity == 'progress') {
       task.STATUS = 10;
     } else if (identity == 'todo') {
@@ -49,27 +47,23 @@ export class EspaceComponent implements OnInit {
     this.taskService.updateTask(task.ID_TACHE, task).subscribe();
   }
   drop(event: CdkDragDrop<Task[]>) {
-    if (event.previousContainer === event.container) {
-      this.updateStatus(
-        event.container.id,
-        event.previousContainer.data[event.previousIndex]
-      );
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      this.updateStatus(
-        event.container.id,
-        event.previousContainer.data[event.previousIndex]
-      );
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
+    const dialogRef = this.dialog.open(ValidationComponent, {
+      width: '500px',
+      data: { title: 'Validation', message: 'Etes-vous sûr de votre choix?' },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.status == 1) {
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+        this.updateStatus(
+          event.container.id,
+          event.container.data[event.currentIndex]
+        );
+      }
+    });
   }
 }

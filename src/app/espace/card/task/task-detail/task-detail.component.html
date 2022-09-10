@@ -1,0 +1,139 @@
+<div class="font-inter">
+  <div class="min-h-[10%] w-full border-b border-black/[0.10]">
+    <div class="flex relative">
+      <div
+        [ngClass]="{
+          'bg-[#e32525]': data.STATUS === 0,
+          'bg-[#43597D]': data.STATUS === 10,
+          'bg-[#0b8e01]': data.STATUS === 1
+        }"
+        class="w-[70px] h-[6px] rounded-[4px]"
+      ></div>
+      <button class="absolute right-0 border-0" (click)="onNoClick()">
+        <i data-feather="x-circle"></i>
+      </button>
+    </div>
+    <div class="mt-2 font-bold text-[16px]">{{ data.ID_TACHED }}</div>
+    <div class="flex pt-2 pb-2 gap-1">
+      <div class="w-[20px] h-[20px] bg-orange-500 rounded-full"></div>
+      <div class="font-thin text-[13px] text-[#000000]/[0.62] italic">
+        {{ data.ID_UTILISATEUR }}
+      </div>
+    </div>
+  </div>
+  <form>
+    <div class="flex flex-col gap-6">
+      <div class="mt-4 h-[200px]">
+        <div class="flex gap-2">
+          <div><i class="w-[20px] h-[20px]" data-feather="file-text"></i></div>
+          <div class="font-medium text-[15px]">Description</div>
+        </div>
+        <div class="h-full mt-2">
+          <textarea
+            class="w-full h-full font-extralight text-[13px] border p-4 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+            placeholder="Description"
+            [(ngModel)]="data.DESCRIPTION"
+            name="description"
+          ></textarea>
+        </div>
+      </div>
+      <div class="mt-[2%]">
+        <div class="flex gap-2 pt-4 pb-2">
+          <div><i class="w-[20px] h-[20px]" data-feather="clock"></i></div>
+          <div class="font-medium text-[15px]">Deadline</div>
+        </div>
+        <div class="mt-2 flex relative">
+          <div class="flex flex-col gap-1">
+            <label class="text-[13px]">Debut</label>
+            <div class="flex border">
+              <input
+                class="border-t p-1"
+                matInput
+                [matDatepicker]="picker"
+                name="debut"
+                [(ngModel)]="data.DATE_DEBUT"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+          <div class="flex flex-col absolute right-0 gap-1">
+            <label class="text-[13px]">Fin</label>
+            <div class="flex border">
+              <input
+                class="border-t p-1"
+                matInput
+                [matDatepicker]="picker2"
+                name="fin"
+                [(ngModel)]="data.DATE_FIN"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="flex gap-2 pt-4">
+          <div><i class="w-[20px] h-[20px]" data-feather="bell"></i></div>
+          <div class="font-light text-[15px]">Reminder</div>
+        </div>
+        <div class="pl-2 flex gap-3 mt-2">
+          <mat-select
+            class="border w-[50%] h-[50px] p-2"
+            name="alarme"
+            [(ngModel)]="data.ID_ALARME"
+            [(value)]="data.ID_ALARME"
+          >
+            <mat-option *ngFor="let al of reminderList" [value]="al.ID_ALARME">
+              {{ al.LIBELLE }}
+            </mat-option>
+          </mat-select>
+          <mat-select
+            class="border w-[50%] h-[50px] p-2"
+            name="repetition"
+            [(ngModel)]="data.ID_REPETITION"
+            [(value)]="data.ID_REPETITION"
+          >
+            <mat-option
+              *ngFor="let al of repetitionList"
+              [value]="al.ID_REPETITION"
+            >
+              {{ al.JOUR + " " + al.LIBELLE }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div>
+        <div class="flex gap-2 pt-4">
+          <div><i class="w-[20px] h-[20px]" data-feather="file"></i></div>
+          <div class="font-light text-[15px]">Document attaché</div>
+        </div>
+        <div class="mt-[1%] flex flex-col">
+          <label>Fichier</label>
+          <input type="file" />
+        </div>
+      </div>
+      <div class="flex mt-[5%] gap-[5%] w-full text-white justify-center">
+        <button
+          class="bg-red-700 w-[25%] h-[50px] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+        >
+          Réinitialiser
+        </button>
+        <button
+          class="bg-[#0b8e01] w-[25%] h-[50px] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+          type="submit"
+          (click)="updateTask()"
+        >
+          Modifier
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
