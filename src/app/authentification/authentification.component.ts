@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../shared/authentification.service';
+
 @Component({
   selector: 'app-authentification',
   templateUrl: './authentification.component.html',
@@ -11,6 +12,7 @@ export class AuthentificationComponent implements OnInit {
   pwd: string = '';
   erreur: string = '';
   hide: boolean = true;
+  socket: any;
   isLoading: boolean = false;
 
   constructor(
@@ -25,11 +27,12 @@ export class AuthentificationComponent implements OnInit {
       (res: any) => {
         sessionStorage.setItem('token', res.data);
         this.isLoading = false;
+
         this.route.navigate(['/espace']);
       },
       (err) => {
         this.erreur = err.error.message;
-        this.isLoading = false
+        this.isLoading = false;
       }
     );
   }

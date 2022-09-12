@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA,MatDialog } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import * as feather from 'feather-icons';
 import { Alarme } from 'src/app/shared/reminder/alarme.model';
 import { AlarmeService } from 'src/app/shared/reminder/alarme.service';
@@ -26,7 +30,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: Task,
     private alarmService: AlarmeService,
     private taskService: TaskService,
-    private dialog:MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -50,15 +54,18 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
   updateTask() {
     this.data.DATE_DEBUT = new Date(this.data.DATE_DEBUT);
     this.data.DATE_FIN = new Date(this.data.DATE_FIN);
-    this.taskService.updateTaskDetail(this.data).subscribe((data) => {
-      this.dialogRef.close(this.data);
-    }, (err)=>{
-      const dialogEr = this.dialog.open(ValidationComponent,{
-        width:'500px',
-        data: {title:'Erreur', message:err.error.message}
-      });
+    this.taskService.updateTaskDetail(this.data).subscribe(
+      (data) => {
+        this.dialogRef.close(this.data);
+      },
+      (err) => {
+        const dialogEr = this.dialog.open(ValidationComponent, {
+          width: '500px',
+          data: { title: 'Erreur', message: err.error.message },
+        });
 
-      console.log(err.error.message)
-    });
+        console.log(err.error.message);
+      }
+    );
   }
 }

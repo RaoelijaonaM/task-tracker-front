@@ -24,6 +24,7 @@ import { TaskComponent } from './espace/card/task/task.component';
 import { EspaceComponent } from './espace/espace.component';
 import { AuthGuard } from './shared/auth.guard';
 import { ValidationComponent } from './validation/validation.component';
+import { DiscussionComponent } from './discussion/discussion.component';
 
 const routes: Routes = [
   { path: '', component: AuthentificationComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
     TaskDetailComponent,
     ValidationComponent,
     AuthentificationComponent,
+    DiscussionComponent,
   ],
   imports: [
     BrowserModule,

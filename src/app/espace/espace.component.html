@@ -1,10 +1,77 @@
+<div class="bg-blue-500 h-100px w-full relative">
+  <div class="flex">
+    <div class="h-[50px] w-[50px] rounded-full bg-red-300"></div>
+    <div class="">Application Name</div>
+  </div>
+  <div class="absolute right-0 top-0">
+    <button (click)="disconnect()"><i data-feather="log-out"></i></button>
+  </div>
+</div>
 <div class="flex">
-  <div class="w-[15%] bg-red-500 h-screen"></div>
-  <div class="w-[65%]">
+  <div class="w-[15%] h-screen border-r border-black/[0.17]">
+    <div class="p-2 h-[20%] border-b border-black/[0.17]">
+      <div class="flex gap-4">
+        <div
+          class="w-[40px] h-[40px] rounded-full bg-zinc-200 flex align-baseline"
+        ></div>
+        <div>
+          <div class="text-[14px] font-medium">{{ etudiant.NOM }}</div>
+          <div class="text-[12px] text-black/[0.44]">
+            {{ etudiant.ID_UTILISATEUR }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-[10%]">
+        <div class="flex gap-2">
+          <div class="text-[13px] font-semibold">Email:</div>
+          <div class="text-[13px]">
+            {{ etudiant.MAIL }}
+          </div>
+        </div>
+        <div class="flex gap-2 mt-2">
+          <div class="text-[13px] font-semibold">Téléphone:</div>
+          <div class="text-[13px]">
+            {{ etudiant.NUMERO }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="h-[60%] border-b">
+      <h1 class="text-[16px] p-2 text-black/[0.44]">Membres</h1>
+      <div class="mt-5">
+        <div *ngFor="let m of membreAffiche" class="p-2 mt-2">
+          <div class="flex gap-2">
+            <div
+              class="w-[20px] h-[20px] rounded-full bg-orange-300 mt-[2%]"
+            ></div>
+            <div class="flex flex-col">
+              <div class="text-[12px] font-semibold">{{ m.NOM }}</div>
+              <div class="text-[12px] font-medium text-black/[0.44]">
+                {{ m.ROLE }}
+              </div>
+              <div class="text-[12px] italic font-extralight">{{ m.MAIL }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h1 class="text-[16px] p-2 text-black/[0.44]">Membres connectés</h1>
+      <div class="m-2">
+        <div class="flex gap-1" *ngFor="let u of userConnected">
+          <div class="w-[8px] h-[8px] rounded-full bg-green-700 m-1"></div>
+          <div class="text-[13px] font-normal">
+            {{ u.nom }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-[60%]">
     <div
-      class="text-center p-1 h-[5%] font-inter font-semibold text-[20px] uppercase border border-black/[0.17]"
+      class="text-center p-1 h-[5%] font-inter font-semibold text-[20px] uppercase border-b border-black/[0.17]"
     >
-      Theme de these
+      {{ theme }}
     </div>
     <div class="h-[95%] grid grid-cols-3 gap-5 p-9 pt-10" cdkDropListGroup>
       <div
@@ -17,7 +84,7 @@
         <app-card header="A Faire" [taskList]="taskTodo"></app-card>
       </div>
       <div
-      id="progress"
+        id="progress"
         cdkDropList
         [cdkDropListData]="taskProgress"
         class="example-list"
@@ -26,7 +93,7 @@
         <app-card header="En cours" [taskList]="taskProgress"></app-card>
       </div>
       <div
-      id="finished"
+        id="finished"
         cdkDropList
         [cdkDropListData]="taskFinished"
         class="example-list"
@@ -36,5 +103,55 @@
       </div>
     </div>
   </div>
-  <div class="w-[20%] bg-teal-600 h-screen"></div>
+  <div
+    class="w-[25%] h-screen border bg-[#D9D9D9]/[0.13] drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
+  >
+    <div
+      class="pl-3 pt-1 h-[5%] font-inter text-[20px] border-b border-black/[0.17]"
+    >
+      Discussion
+    </div>
+    <div class="m-2 h-[70%] flex flex-col gap-[10%] overflow-auto">
+      <div *ngFor="let m of messageList" class="h-[20%]">
+        <div class="flex gap-1">
+          <div class="w-[20px] h-[20px] rounded-full bg-orange-300 m-1"></div>
+          <div class="text-[15px] pt-1">{{ m.NOM }}</div>
+        </div>
+        <div
+          class="w-full box-shadow-[0px_4px_4px_rgba(0,0,0,0.25)] mt-2 bg-white h-[100%] text-[12px] p-2"
+        >
+          {{ m.MESSAGE }}
+        </div>
+      </div>
+    </div>
+    <div class="h-[25%] border-t border-black/[0.24]">
+      <div class="flex h-full">
+        <div class="w-[80%] p-2">
+          <textarea
+            class="w-full h-[95%] font-extralight text-[13px] border p-4 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+            placeholder="Ecrivez-ici..."
+            [(ngModel)]="message"
+            name="description"
+          ></textarea>
+        </div>
+        <div class="w-[20%] m-2 flex flex-col gap-1">
+          <button
+            class="bg-[#31A24C] w-[70%] h-[18%] relative"
+            (click)="sendMessage()"
+          >
+            <i
+              class="text-white w-[20px] h-[20px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+              data-feather="send"
+            ></i>
+          </button>
+          <button class="bg-[#EF2323] w-[70%] h-[18%] relative">
+            <i
+              class="text-white w-[20px] h-[20px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+              data-feather="trash-2"
+            ></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
