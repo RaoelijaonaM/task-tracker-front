@@ -4,6 +4,5 @@ export class Membre {
   MAIL!: string;
   NUMERO!: string;
   ID_ESPACE!: string;
-  THEME!: string;
   ROLE!: string;
 }

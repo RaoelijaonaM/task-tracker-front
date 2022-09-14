@@ -10,6 +10,7 @@ import { TaskService } from '../shared/task.service';
 import { getUserViaToken } from '../shared/token.utils';
 import { ValidationComponent } from '../validation/validation.component';
 import { Task } from './card/task/task.model';
+import { Espace } from './espace.model';
 import { Membre } from './membre.model';
 
 @Component({
@@ -19,14 +20,13 @@ import { Membre } from './membre.model';
 })
 export class EspaceComponent implements OnInit, AfterViewInit {
   membre!: Membre[];
+  espace: Espace = new Espace();
   membreAffiche!: Membre[];
-  etudiant: Membre = new Membre();
-  theme!: string;
   tasks!: Task[];
   taskTodo!: Task[];
   taskProgress!: Task[];
   taskFinished!: Task[];
-  userConnected!: [{ id_user: ''; nom: '' }];
+  userConnected!: [{ id_user: '',nom: '',room:'' }];
   messageList: Discussion[] = [];
   message: string = '';
   socket!: any;
@@ -47,13 +47,15 @@ export class EspaceComponent implements OnInit, AfterViewInit {
       this.messageList = data.data;
     });
   }
+ 
   getUserConnected() {
     let userSign = getUserViaToken();
     this.socket = io.io(
-      `${environment.socket}?id_user=${userSign.ID_UTILISATEUR}&nom=${
-        userSign.NOM + ' ' + userSign.PRENOM
-      }`
+      environment.socket
     );
+    let nom = userSign.NOM+' '+userSign.PRENOM;
+    let espace = this.espace.ID_ESPACE;
+    this.socket.emit('login',{nom,espace});
     this.socket.on('user-connected', (userConnected: any) => {
       this.userConnected = userConnected;
     });
@@ -73,20 +75,14 @@ export class EspaceComponent implements OnInit, AfterViewInit {
   }
   getEspaceDetail() {
     this.espaceService.getDetails().subscribe((res: any) => {
-      this.membre = res.data.filter((data: any) => {
-        data as Membre;
-        return data.ROLE != 'Etudiant';
-      });
+      this.espace = res.data[0];
+    });
+    this.espaceService.getMembers().subscribe((res: any) => {
+      this.membre = res.data;
       this.membreAffiche = this.membre.filter((data: any) => {
         data as Membre;
         return data.ROLE != 'Anonyme';
       });
-      let etudArray = res.data.filter((data: any) => {
-        data as Membre;
-        return data.ROLE == 'Etudiant';
-      });
-      this.etudiant = etudArray[0];
-      this.theme = res.data[0].THEME;
     });
   }
   getTasksList() {
@@ -123,6 +119,7 @@ export class EspaceComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.status == 1) {
+        this.espaceService.getNotif().subscribe();
         transferArrayItem(
           event.previousContainer.data,
           event.container.data,
@@ -138,18 +135,20 @@ export class EspaceComponent implements OnInit, AfterViewInit {
   }
   sendMessage() {
     let userSign = getUserViaToken();
-    this.socket.emit('message', this.message);
-    let discussion = new Discussion();
-    discussion.MESSAGE = this.message;
-    discussion.NOM = userSign.NOM;
-    discussion.DATE_DISCUSSION = new Date();
-    discussion.ID_ESPACE = 'ES1';
-    discussion.ROLE = '';
-    console.log(discussion);
-    this.espaceService.insertMessage(discussion).subscribe((data: any) => {
-      this.messageList.push(discussion);
-    });
-    this.message = '';
+    if (this.message != '') {
+      let discussion = new Discussion();
+      discussion.MESSAGE = this.message;
+      discussion.NOM = userSign.NOM;
+      discussion.DATE_DISCUSSION = new Date();
+      discussion.ID_ESPACE = 'ES1';
+      discussion.ROLE = '';
+      console.log(discussion);
+      this.espaceService.insertMessage(discussion).subscribe((data: any) => {
+        this.socket.emit('message', this.message);
+        this.messageList.push(discussion);
+      });
+      this.message = '';
+    }
   }
   disconnect() {
     this.socket.disconnect();

@@ -1,5 +1,7 @@
 <div
   class="w-full bg-white min-h-[120px] p-2 mt-4 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] relative"
+  cdkDrag
+  [cdkDragDisabled]="disable"
 >
   <div class="flex relative">
     <!-- <div class="w-[70px] h-[6px] bg-[#e32525] rounded-[4px]"></div> -->
@@ -16,13 +18,17 @@
     </button>
   </div>
   <div class="text-[12px] font-medium pt-1">{{ task.ID_TACHED }}</div>
-  <div class="w-[20px] h-[20px] bg-orange-500 rounded-full">
+  <div *ngIf="enableImage" class="w-[20px] h-[20px] bg-orange-500 rounded-full">
     <!-- image -->
   </div>
   <div class="w-full grid grid-cols-2 absolute bottom-1 gap-1">
     <div class="flex">
       <div>
-        <i class="w-[22px] h-[22px] mt-1" style="stroke-width: 1px!important;" data-feather="calendar"></i>
+        <i
+          class="w-[22px] h-[22px] mt-1"
+          style="stroke-width: 1px !important"
+          data-feather="calendar"
+        ></i>
       </div>
       <div class="pl-1">
         <div class="text-[11px] font-medium">
@@ -34,7 +40,8 @@
     <div class="flex">
       <div>
         <i
-          class="text-rose-800 w-[22px] h-[22px] mt-1" style="stroke-width: 1px!important;"
+          class="text-rose-800 w-[22px] h-[22px] mt-1"
+          style="stroke-width: 1px !important"
           data-feather="calendar"
         ></i>
       </div>

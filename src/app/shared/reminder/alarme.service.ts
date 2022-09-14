@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Alarme } from 'src/app/shared/reminder/alarme.model';
 import { Repetition } from 'src/app/shared/reminder/repetition.model';
 import { environment } from 'src/environments/environment';
+import { AlarmDetail } from './alarmDetail.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +23,10 @@ export class AlarmeService {
     return this.http
       .get<any>(this.url + 'alarms')
       .pipe(map((res) => res.data as Alarme[]));
+  }
+  getAlarmsTask(tache: string): Observable<AlarmDetail> {
+    return this.http
+      .get<any>(this.url + 'alarms/' + tache)
+      .pipe(map((res) => res.data as AlarmDetail));
   }
 }

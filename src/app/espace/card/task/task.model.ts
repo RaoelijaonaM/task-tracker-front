@@ -9,4 +9,6 @@ export class Task {
   ID_ALARME!: string;
   ID_REPETITION!: string;
   DESCRIPTION!: string;
+  ROLE!: string;
+  FICHIER!: number;
 }

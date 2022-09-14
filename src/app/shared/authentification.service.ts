@@ -13,7 +13,7 @@ export class AuthentificationService {
       login: login,
       password: pwd,
     };
-    let url = environment.api + '/user/login';
+    let url = environment.api + 'user/login';
     return this.http.post<User>(url, body);
   }
 }

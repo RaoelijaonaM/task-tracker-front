@@ -9,6 +9,7 @@ import { Alarme } from 'src/app/shared/reminder/alarme.model';
 import { AlarmeService } from 'src/app/shared/reminder/alarme.service';
 import { Repetition } from 'src/app/shared/reminder/repetition.model';
 import { TaskService } from 'src/app/shared/task.service';
+import { getUserViaToken, isAdmin } from 'src/app/shared/token.utils';
 import { ValidationComponent } from 'src/app/validation/validation.component';
 import { Task } from '../task.model';
 @Component({
@@ -24,7 +25,8 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
   repetitionList!: Repetition[];
   reminder!: string;
   repetition!: string;
-
+  showUser: boolean = true;
+  disableUpdate: boolean = true;
   constructor(
     public dialogRef: MatDialogRef<TaskDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
@@ -35,6 +37,21 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getAlarmsList();
+    this.checkIfUserCanBeShown();
+    this.checkIfUserCanUpdate();
+  }
+  checkIfUserCanBeShown() {
+    console.log(this.data.ROLE);
+    if (this.data.ROLE == 'Anonyme') {
+      this.showUser = false;
+    }
+  }
+  checkIfUserCanUpdate() {
+    let userConnected = getUserViaToken();
+    let myName = userConnected.NOM + ' ' + userConnected.PRENOM;
+    if (this.data.ID_UTILISATEUR == myName || isAdmin()) {
+      this.disableUpdate = false;
+    }
   }
   ngAfterViewInit(): void {
     feather.replace();
@@ -56,6 +73,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     this.data.DATE_FIN = new Date(this.data.DATE_FIN);
     this.taskService.updateTaskDetail(this.data).subscribe(
       (data) => {
+        console.log("afterUpdate: ",this.data);
         this.dialogRef.close(this.data);
       },
       (err) => {
@@ -63,8 +81,6 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
           width: '500px',
           data: { title: 'Erreur', message: err.error.message },
         });
-
-        console.log(err.error.message);
       }
     );
   }

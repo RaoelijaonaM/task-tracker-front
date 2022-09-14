@@ -15,6 +15,11 @@ export class EspaceService {
     let url = environment.api + '/space/' + id_space;
     return this.http.get<Membre[]>(url);
   }
+  getMembers(): Observable<Membre[]> {
+    let id_space = 'ES1';
+    let url = environment.api + '/members/' + id_space;
+    return this.http.get<Membre[]>(url);
+  }
   disconnect() {
     sessionStorage.removeItem('token');
     this.router.navigate(['/']);
@@ -27,5 +32,9 @@ export class EspaceService {
     let id_space = 'ES1';
     let url = environment.api + 'messages/' + id_space;
     return this.http.get<Discussion[]>(url);
+  }
+  getNotif(): Observable<any> {
+    let url = environment.api + 'notifs/';
+    return this.http.get<any>(url);
   }
 }

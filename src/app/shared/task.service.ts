@@ -30,6 +30,7 @@ export class TaskService {
   }
   updateTaskDetail(task: Task): Observable<any> {
     console.log('service**********', task);
+    task.DATE_FIN.setDate(task.DATE_FIN.getDate() + 1);
     let query = this.url + 'taskDetail/' + task.ID_TACHE;
     return this.http.put(query, task);
   }

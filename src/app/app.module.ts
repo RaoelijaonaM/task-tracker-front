@@ -16,15 +16,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 /*************Component*****************************/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AuthentificationComponent } from './authentification/authentification.component';
+import { DiscussionComponent } from './discussion/discussion.component';
 import { CardComponent } from './espace/card/card.component';
 import { TaskDetailComponent } from './espace/card/task/task-detail/task-detail.component';
 import { TaskComponent } from './espace/card/task/task.component';
 import { EspaceComponent } from './espace/espace.component';
 import { AuthGuard } from './shared/auth.guard';
 import { ValidationComponent } from './validation/validation.component';
-import { DiscussionComponent } from './discussion/discussion.component';
 
 const routes: Routes = [
   { path: '', component: AuthentificationComponent },
@@ -57,8 +59,14 @@ const routes: Routes = [
     MatDividerModule,
     MatSelectModule,
     MatIconModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerImmediately',
+    }),
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, DatePipe],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

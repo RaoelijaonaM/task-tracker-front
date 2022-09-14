@@ -17,3 +17,13 @@ export const getTokenExpiration = () => {
   }
   return null;
 };
+
+export const isAdmin = () => {
+ const userConnected = getUserViaToken();
+ if(userConnected.ID_ROLE == 'R2'){
+  return true;
+ }
+  return false;
+};
+
+
