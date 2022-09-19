@@ -38,7 +38,6 @@
             placeholder="Description"
             [(ngModel)]="data.tache.DESCRIPTION"
             name="description"
-            [disabled]="disableUpdate"
           ></textarea>
         </div>
       </div>
@@ -57,7 +56,6 @@
                 [matDatepicker]="picker"
                 name="debut"
                 [(ngModel)]="data.tache.DATE_DEBUT"
-                [disabled]="disableUpdate"
               />
               <mat-datepicker-toggle
                 matSuffix
@@ -75,7 +73,6 @@
                 [matDatepicker]="picker2"
                 name="fin"
                 [(ngModel)]="data.tache.DATE_FIN"
-                [disabled]="disableUpdate"
               />
               <mat-datepicker-toggle
                 matSuffix
@@ -93,7 +90,6 @@
         </div>
         <div class="pl-2 flex gap-3 mt-2">
           <mat-select
-            [disabled]="disableUpdate"
             class="border w-[50%] h-[50px] p-2"
             name="alarme"
             [(ngModel)]="data.tache.ID_ALARME"
@@ -119,7 +115,14 @@
             </ng-container>
             <ng-container matColumnDef="Link">
               <th mat-header-cell *matHeaderCellDef="">Link</th>
-              <td mat-cell *matCellDef="let element"><a target="_blank" href="{{ element.LINK }}" download="{{element.TITRE}}">download</a></td>
+              <td mat-cell *matCellDef="let element">
+                <a
+                  target="_blank"
+                  href="{{ element.LINK }}"
+                  download="{{ element.TITRE }}"
+                  >download</a
+                >
+              </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -130,15 +133,22 @@
         <button
           class="bg-red-700 w-[25%] h-[50px] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
         >
-          Réinitialiser
+          Annuler
         </button>
         <button
-          class="bg-[#0b8e01] w-[25%] h-[50px] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-          type="submit"
-          (click)="updateTask()"
+          class="bg-[#c3c8c2] w-[25%] h-[50px] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+          *ngIf="disableUpdate; else updated"
         >
           Modifier
         </button>
+        <ng-template
+          #updated
+        >
+        <button class="bg-[#0b8e01] w-[25%] h-[50px] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+        type="submit"
+        (click)="updateTask()">
+          Modifier</button>
+        </ng-template>
       </div>
     </div>
   </form>

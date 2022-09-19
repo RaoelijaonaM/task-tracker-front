@@ -19,7 +19,7 @@ export interface DialogData {
 export class TaskComponent implements OnInit, AfterViewInit {
   @Input() task: TaskMember = new TaskMember();
   disable: boolean = true;
-  enableImage: boolean = true;
+  disableUpdate: boolean = true;
   constructor(
     public dialog: MatDialog,
     private taskService: TaskService,
@@ -27,20 +27,23 @@ export class TaskComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.checkTaskIfCanBeDrag();
+    this.checkTaskIfCanBeDragAndTaskDetailled();
     this.ckeckTaskIfCanBeDetailled();
     //  this.pushNotifIfTodayAlarm();
   }
   ngAfterViewInit(): void {
     feather.replace();
   }
-  checkTaskIfCanBeDrag() {
+  checkTaskIfCanBeDragAndTaskDetailled() {
     let userConnected = getUserViaToken();
     let nomUser = userConnected.NOM + ' ' + userConnected.PRENOM;
     const findMe = this.task.executeur.find((ex) => {
       return ex.ID_UTILISATEUR === nomUser;
     });
     if (findMe || isAdmin()) {
+      this.disableUpdate = false;
+    }
+    if (findMe?.PRIORITE == 1 || isAdmin()) {
       this.disable = false;
     }
   }
@@ -80,6 +83,9 @@ export class TaskComponent implements OnInit, AfterViewInit {
           width: '40%',
           data: taskm,
         });
+      //   dialogRef.componentInstance.notified.subscribe(result => {
+      //     console.log('Got the data!', result);
+      // });
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
             this.task = result;

@@ -13,7 +13,7 @@ export class NotificationComponent implements OnInit {
   userSession!: any;
   @Input() socket: any;
   @Input() taskList!: TaskMember[];
-
+  @Input() notif:number=0;
   constructor(
     private espaceService: EspaceService,
     private taskAlarm: AlarmeService

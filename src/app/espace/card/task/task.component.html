@@ -13,7 +13,7 @@
       }"
       class="w-[70px] h-[6px] rounded-[4px]"
     ></div>
-    <button class="absolute right-0" (click)="openDetail()">
+    <button class="absolute right-0" [disabled]="disableUpdate" (click)="openDetail()">
       <img src="../../../../assets/images/three-dots.svg" />
     </button>
   </div>

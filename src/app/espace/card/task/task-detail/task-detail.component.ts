@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
@@ -27,6 +34,8 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
   disableUpdate: boolean = true;
   displayedColumns: string[] = ['Titre', 'Link'];
   fichier: File[] = [];
+  @Output() sendNotif = new EventEmitter<number>();
+
   constructor(
     public dialogRef: MatDialogRef<TaskDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TaskMember,
@@ -55,7 +64,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     const findMe = this.data.executeur.find((ex) => {
       return ex.ID_UTILISATEUR === myName;
     });
-    if (findMe || isAdmin()) {
+    if (findMe?.PRIORITE == 1 || isAdmin()) {
       this.disableUpdate = false;
     }
   }
@@ -75,6 +84,10 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
       this.reminderList = data;
       console.log(this.reminderList);
     });
+  }
+  notified(isa: number) {
+    console.log('*************notif1: ');
+    this.sendNotif.emit(isa);
   }
   updateTask() {
     this.data.tache.DATE_DEBUT = new Date(this.data.tache.DATE_DEBUT);

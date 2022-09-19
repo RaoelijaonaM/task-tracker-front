@@ -35,6 +35,7 @@ export class EspaceComponent implements OnInit, AfterViewInit {
   messageList: Discussion[] = [];
   message: string = '';
   socket!: any;
+  notification:number=0;
   constructor(
     private taskService: TaskService,
     private espaceService: EspaceService,
@@ -116,6 +117,10 @@ export class EspaceComponent implements OnInit, AfterViewInit {
       });
       this.getUserConnected();
     });
+  }
+  notified(isa:number){
+    console.log("*************notif2: ");
+    this.notification += isa;
   }
   getTasksList() {
     this.taskService.getTasks().subscribe((data) => {
