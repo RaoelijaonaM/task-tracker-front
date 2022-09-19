@@ -11,7 +11,7 @@ import { TaskMember } from '../card/task/taskMember.model';
 })
 export class NotificationComponent implements OnInit {
   userSession!: any;
-  // @Input() socket: any;
+  @Input() socket: any;
   @Input() taskList!: TaskMember[];
 
   constructor(
@@ -23,9 +23,9 @@ export class NotificationComponent implements OnInit {
     this.userSession = getUserViaToken();
   }
   disconnect() {
-    // if (this.socket) {
-    //   this.socket.disconnect();
-    // }
+    if (this.socket) {
+      this.socket.disconnect();
+    }
     this.espaceService.disconnect();
   }
   // pushNotifIfTodayAlarm() {
