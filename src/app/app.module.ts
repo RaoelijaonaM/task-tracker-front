@@ -14,9 +14,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import {MatTableModule} from '@angular/material/table';
 /*************Component*****************************/
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -26,18 +26,25 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AuthentificationComponent } from './authentification/authentification.component';
+import { CreerespaceComponent } from './creerespace/creerespace.component';
 import { DiscussionComponent } from './discussion/discussion.component';
+import { DossierComponent } from './dossier/dossier.component';
 import { CardComponent } from './espace/card/card.component';
 import { TaskDetailComponent } from './espace/card/task/task-detail/task-detail.component';
 import { TaskComponent } from './espace/card/task/task.component';
 import { EspaceComponent } from './espace/espace.component';
 import { NotificationComponent } from './espace/notification/notification.component';
 import { FileComponent } from './file/file.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { AuthGuard } from './shared/auth.guard';
 import { ValidationComponent } from './validation/validation.component';
 
 const routes: Routes = [
   { path: '', component: AuthentificationComponent },
+  { path: 'home', component: HomepageComponent },
+  { path: 'dossier', component: DossierComponent },
+  { path: 'creerespace', component: CreerespaceComponent },
   { path: 'espace', component: EspaceComponent, canActivate: [AuthGuard] },
   { path: 'taskDetail', component: TaskDetailComponent },
 ];
@@ -53,6 +60,10 @@ const routes: Routes = [
     DiscussionComponent,
     NotificationComponent,
     FileComponent,
+    HomepageComponent,
+    NavbarComponent,
+    CreerespaceComponent,
+    DossierComponent,
   ],
   imports: [
     BrowserModule,

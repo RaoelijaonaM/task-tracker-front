@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../shared/authentification.service';
+import { NavbarService } from '../shared/navbar.service';
 
 @Component({
   selector: 'app-authentification',
@@ -18,10 +19,13 @@ export class AuthentificationComponent implements OnInit {
 
   constructor(
     private authService: AuthentificationService,
-    private route: Router
+    private route: Router,
+    private navbarservice: NavbarService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.navbarservice.hide();
+  }
   authenticate() {
     this.isLoading = true;
     sessionStorage.setItem('espace', this.espace);

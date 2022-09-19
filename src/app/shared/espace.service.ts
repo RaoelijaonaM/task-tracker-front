@@ -11,12 +11,12 @@ import { Membre } from '../espace/membre.model';
 export class EspaceService {
   constructor(private http: HttpClient, private router: Router) {}
   getDetails(): Observable<Membre[]> {
-    let id_space = sessionStorage.getItem('espace');;
+    let id_space = sessionStorage.getItem('espace');
     let url = environment.api + '/space/' + id_space;
     return this.http.get<Membre[]>(url);
   }
   getMembers(): Observable<Membre[]> {
-    let id_space = sessionStorage.getItem('espace');;
+    let id_space = sessionStorage.getItem('espace');
     let url = environment.api + '/members/' + id_space;
     return this.http.get<Membre[]>(url);
   }
@@ -29,7 +29,7 @@ export class EspaceService {
     return this.http.post<Discussion>(url, discussion);
   }
   getMessage(): Observable<Discussion[]> {
-    let id_space = sessionStorage.getItem('espace');;
+    let id_space = sessionStorage.getItem('espace');
     let url = environment.api + 'messages/' + id_space;
     return this.http.get<Discussion[]>(url);
   }

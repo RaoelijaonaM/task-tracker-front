@@ -7,6 +7,7 @@ import * as io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 import { Discussion } from '../discussion/discussion.model';
 import { EspaceService } from '../shared/espace.service';
+import { NavbarService } from '../shared/navbar.service';
 import { TaskService } from '../shared/task.service';
 import { getUserViaToken } from '../shared/token.utils';
 import { ValidationComponent } from '../validation/validation.component';
@@ -37,12 +38,14 @@ export class EspaceComponent implements OnInit, AfterViewInit {
   constructor(
     private taskService: TaskService,
     private espaceService: EspaceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private navbarservice: NavbarService
   ) {}
   ngAfterViewInit(): void {
     feather.replace();
   }
   ngOnInit(): void {
+    this.navbarservice.show();
     console.log('espace connection');
     console.log(this.userSession);
     this.getTasksList();
