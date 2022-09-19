@@ -23,7 +23,7 @@
         </label>
         <ul
           tabindex="0"
-          class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+          class="menu menu-compact dropdown-content mt-3 p-2 shadow text-white bg-black rounded-box w-52"
         >
           <li *ngFor="let menu of listMenu">
             <a href="{{ menu.url }}">{{ menu.title }}</a>
@@ -46,24 +46,9 @@
     </div>
 
     <div class="navbar-end">
-      <div class="h-[40px] w-[40px] rounded-full bg-orange-500"></div>
+      <div class="h-[40px] w-[40px] rounded-full bg-orange-500 m-2"></div>
       <div>{{ userSession.PRENOM + " " + userSession.NOM }}</div>
-      <button class="btn btn-ghost btn-circle">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
-      </button>
+
       <button class="btn btn-ghost btn-circle">
         <div class="indicator">
           <svg
@@ -83,8 +68,12 @@
           <span class="badge badge-xs badge-primary indicator-item"></span>
         </div>
       </button>
-      <i data-feather="power"></i>
-      <i data-feather="mail"></i>
+      <button class="mr-6">
+        <i data-feather="mail"> </i>
+      </button>
+      <button (click)="disconnect()">
+        <i data-feather="power"></i>
+      </button>
     </div>
   </div>
 </div>
