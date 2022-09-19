@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   getDownloadURL,
   ref,
@@ -15,6 +15,7 @@ import { File } from './file.model';
 })
 export class FileComponent implements OnInit {
   @Input() tache!: Task;
+  @Output() sendNotif = new EventEmitter<number>();
   constructor(private storage: Storage, private fileservice: FileService) {}
   progression: number = 0;
   ngOnInit(): void {}
@@ -42,7 +43,9 @@ export class FileComponent implements OnInit {
           fichier.LINK = downloadUrl;
           fichier.TITRE = file.name;
           console.log('fichier ', fichier);
-          self.fileservice.insertFile(fichier).subscribe();
+          self.fileservice.insertFile(fichier).subscribe((data)=>{
+            self.sendNotif.emit(1);
+          });
         });
       }
     );
