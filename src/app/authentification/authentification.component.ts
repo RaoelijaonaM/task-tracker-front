@@ -13,6 +13,7 @@ export class AuthentificationComponent implements OnInit {
   erreur: string = '';
   hide: boolean = true;
   socket: any;
+  espace: string = '';
   isLoading: boolean = false;
 
   constructor(
@@ -23,6 +24,7 @@ export class AuthentificationComponent implements OnInit {
   ngOnInit(): void {}
   authenticate() {
     this.isLoading = true;
+    sessionStorage.setItem('espace', this.espace);
     this.authService.signIn(this.pseudo, this.pwd).subscribe(
       (res: any) => {
         sessionStorage.setItem('token', res.data);

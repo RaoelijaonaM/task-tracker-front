@@ -1,11 +1,11 @@
 <div class="font-inter">
-  <div class="min-h-[10%] w-full border-b border-black/[0.10]">
+  <div class="h-[10%] w-full border-b border-black/[0.10]">
     <div class="flex relative">
       <div
         [ngClass]="{
-          'bg-[#e32525]': data.STATUS === 0,
-          'bg-[#43597D]': data.STATUS === 10,
-          'bg-[#0b8e01]': data.STATUS === 1
+          'bg-[#e32525]': data.tache.STATUS === 0,
+          'bg-[#43597D]': data.tache.STATUS === 10,
+          'bg-[#0b8e01]': data.tache.STATUS === 1
         }"
         class="w-[70px] h-[6px] rounded-[4px]"
       ></div>
@@ -13,17 +13,21 @@
         <i data-feather="x-circle"></i>
       </button>
     </div>
-    <div class="mt-2 font-bold text-[16px]">{{ data.ID_TACHED }}</div>
-    <div *ngIf="showUser" class="flex pt-2 pb-2 gap-1">
-      <div class="w-[20px] h-[20px] bg-orange-500 rounded-full"></div>
-      <div class="font-thin text-[13px] text-[#000000]/[0.62] italic">
-        {{ data.ID_UTILISATEUR }}
+    <div class="mt-2 font-bold text-[16px]">{{ data.tache.ID_TACHED }}</div>
+    <div class="flex gap-2">
+      <div *ngFor="let ex of data.executeur">
+        <div *ngIf="ex.shown" class="flex pt-2 pb-2 gap-1">
+          <div class="w-[20px] h-[20px] bg-orange-500 rounded-full"></div>
+          <div class="font-thin text-[13px] text-[#000000]/[0.62] italic">
+            {{ ex.ID_UTILISATEUR }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <form>
-    <div class="flex flex-col gap-6">
-      <div class="mt-4 h-[200px]">
+    <div class="flex flex-col gap-6 h-[90%] overflow-auto">
+      <div class="mt-4 h-[100px] bg-red">
         <div class="flex gap-2">
           <div><i class="w-[20px] h-[20px]" data-feather="file-text"></i></div>
           <div class="font-medium text-[15px]">Description</div>
@@ -32,7 +36,7 @@
           <textarea
             class="w-full h-full font-extralight text-[13px] border p-4 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
             placeholder="Description"
-            [(ngModel)]="data.DESCRIPTION"
+            [(ngModel)]="data.tache.DESCRIPTION"
             name="description"
             [disabled]="disableUpdate"
           ></textarea>
@@ -43,7 +47,7 @@
           <div><i class="w-[20px] h-[20px]" data-feather="clock"></i></div>
           <div class="font-medium text-[15px]">Deadline</div>
         </div>
-        <div class="mt-2 flex relative">
+        <div class="mt-2 flex gap-2">
           <div class="flex flex-col gap-1">
             <label class="text-[13px]">Debut</label>
             <div class="flex border">
@@ -52,7 +56,7 @@
                 matInput
                 [matDatepicker]="picker"
                 name="debut"
-                [(ngModel)]="data.DATE_DEBUT"
+                [(ngModel)]="data.tache.DATE_DEBUT"
                 [disabled]="disableUpdate"
               />
               <mat-datepicker-toggle
@@ -62,7 +66,7 @@
               <mat-datepicker #picker></mat-datepicker>
             </div>
           </div>
-          <div class="flex flex-col absolute right-0 gap-1">
+          <div class="flex flex-col gap-1">
             <label class="text-[13px]">Fin</label>
             <div class="flex border">
               <input
@@ -70,7 +74,7 @@
                 matInput
                 [matDatepicker]="picker2"
                 name="fin"
-                [(ngModel)]="data.DATE_FIN"
+                [(ngModel)]="data.tache.DATE_FIN"
                 [disabled]="disableUpdate"
               />
               <mat-datepicker-toggle
@@ -92,37 +96,34 @@
             [disabled]="disableUpdate"
             class="border w-[50%] h-[50px] p-2"
             name="alarme"
-            [(ngModel)]="data.ID_ALARME"
-            [(value)]="data.ID_ALARME"
+            [(ngModel)]="data.tache.ID_ALARME"
+            [(value)]="data.tache.ID_ALARME"
           >
             <mat-option *ngFor="let al of reminderList" [value]="al.ID_ALARME">
               {{ al.LIBELLE }}
             </mat-option>
           </mat-select>
-          <mat-select
-            [disabled]="disableUpdate"
-            class="border w-[50%] h-[50px] p-2"
-            name="repetition"
-            [(ngModel)]="data.ID_REPETITION"
-            [(value)]="data.ID_REPETITION"
-          >
-            <mat-option
-              *ngFor="let al of repetitionList"
-              [value]="al.ID_REPETITION"
-            >
-              {{ al.JOUR + " " + al.LIBELLE }}
-            </mat-option>
-          </mat-select>
         </div>
       </div>
-      <div *ngIf="data.FICHIER == 1">
+      <div *ngIf="data.tache.FICHIER == 1">
         <div class="flex gap-2 pt-4">
           <div><i class="w-[20px] h-[20px]" data-feather="file"></i></div>
           <div class="font-light text-[15px]">Document attaché</div>
         </div>
         <div class="mt-[1%] flex flex-col">
-          <label>Fichier</label>
-          <input  type="file" />
+          <app-file [tache]="data.tache"></app-file>
+          <table mat-table [dataSource]="fichier" class="mat-elevation-z8">
+            <ng-container matColumnDef="Titre">
+              <th mat-header-cell *matHeaderCellDef="">Titre</th>
+              <td mat-cell *matCellDef="let element">{{ element.TITRE }}</td>
+            </ng-container>
+            <ng-container matColumnDef="Link">
+              <th mat-header-cell *matHeaderCellDef="">Link</th>
+              <td mat-cell *matCellDef="let element">{{ element.LINK }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
         </div>
       </div>
       <div class="flex mt-[5%] gap-[5%] w-full text-white justify-center">

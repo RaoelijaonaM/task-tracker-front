@@ -1,4 +1,12 @@
-li::before{
-    content: "\25AA"; 
-    color:green;
+li::before {
+  content: "\25AA";
+  color: green;
+}
+.contact {
+  font-size: 15px;
+}
+@media (min-width: 1920px) {
+    .contact {
+        font-size: 20px;
+    }
 }

@@ -13,7 +13,7 @@ export class TaskService {
   constructor(private http: HttpClient) {}
 
   getTasks(): Observable<Task[]> {
-    let espace = 'ES1';
+    let espace = sessionStorage.getItem('espace');
     return this.http
       .get<any>(this.url + 'tasks/' + espace)
       .pipe(map((res) => res.data as Task[]));
@@ -23,10 +23,10 @@ export class TaskService {
     console.log('put');
     return this.http.put(query, task);
   }
-  getTaskDetail(id: string): Observable<Task> {
+  getTaskDetail(id: string): Observable<Task[]> {
     return this.http
       .get<any>(this.url + 'task/' + id)
-      .pipe(map((res) => res.data[0] as Task));
+      .pipe(map((res) => res.data as Task[]));
   }
   updateTaskDetail(task: Task): Observable<any> {
     console.log('service**********', task);

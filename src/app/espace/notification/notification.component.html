@@ -1,0 +1,33 @@
+<div
+  class="bg-[#2B3240] min-h-[5%] w-full flex shadow-2xl text-white sticky top-0 z-50"
+>
+  <div class="flex justify-center items-center gap-3 p-2 pb-3 w-[15%]">
+    <div class="h-[35px] w-[35px] rounded-full">
+      <img class="rounded-full" src="../../assets/images/icone.jpg" />
+    </div>
+    <div>
+      <div class="text-[15px] uppercase">Task Tracker</div>
+      <div class="text-[13px] italic font-extralight">Faculté de Médecine</div>
+    </div>
+  </div>
+  <div class="w-[60%]"></div>
+  <div class="flex w-[10%] gap-[20%] justify-center items-center">
+    <mat-icon class="" matBadge="2" matBadgeColor="warn"
+      >notifications</mat-icon
+    >
+    <mat-icon class="" matBadge="1" matBadgeColor="warn">email</mat-icon>
+  </div>
+  <div class="w-[15%] flex justify-center items-center gap-2">
+    <div class="h-[40px] w-[40px] rounded-full bg-orange-500"></div>
+    <div>{{ userSession.PRENOM + " " + userSession.NOM }}</div>
+    <button class="ml-2" [matMenuTriggerFor]="menu">
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="disconnect()">
+        <mat-icon>power_settings_new</mat-icon>log out
+      </button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+  </div>
+</div>

@@ -7,9 +7,9 @@
     <!-- <div class="w-[70px] h-[6px] bg-[#e32525] rounded-[4px]"></div> -->
     <div
       [ngClass]="{
-        'bg-[#e32525]': task.STATUS === 0,
-        'bg-[#43597D]': task.STATUS === 10,
-        'bg-[#0b8e01]': task.STATUS === 1
+        'bg-[#e32525]': task.tache.STATUS === 0,
+        'bg-[#43597D]': task.tache.STATUS === 10,
+        'bg-[#0b8e01]': task.tache.STATUS === 1
       }"
       class="w-[70px] h-[6px] rounded-[4px]"
     ></div>
@@ -17,9 +17,11 @@
       <img src="../../../../assets/images/three-dots.svg" />
     </button>
   </div>
-  <div class="text-[12px] font-medium pt-1">{{ task.ID_TACHED }}</div>
-  <div *ngIf="enableImage" class="w-[20px] h-[20px] bg-orange-500 rounded-full">
-    <!-- image -->
+  <div class="text-[12px] font-medium pt-1">{{ task.tache.ID_TACHED }}</div>
+  <div class="inline-block pr-1" *ngFor="let ex of task.executeur">
+    <div *ngIf="ex.shown" class="w-[20px] h-[20px] bg-orange-500 rounded-full">
+      <!-- image -->
+    </div>
   </div>
   <div class="w-full grid grid-cols-2 absolute bottom-1 gap-1">
     <div class="flex">
@@ -32,7 +34,7 @@
       </div>
       <div class="pl-1">
         <div class="text-[11px] font-medium">
-          {{ task.DATE_DEBUT | date: "d MMM, y" }}
+          {{ task.tache.DATE_DEBUT | date: "d MMM, y" }}
         </div>
         <div class="text-[11px] font-light italic">Debut</div>
       </div>
@@ -47,7 +49,7 @@
       </div>
       <div class="pl-1">
         <div class="text-[11px] font-medium">
-          {{ task.DATE_FIN | date: "d MMM, y" }}
+          {{ task.tache.DATE_FIN | date: "d MMM, y" }}
         </div>
         <div class="text-[11px] font-light italic">fin</div>
       </div>

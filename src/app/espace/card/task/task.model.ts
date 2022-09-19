@@ -7,8 +7,8 @@ export class Task {
   DATE_FIN!: Date;
   STATUS!: number;
   ID_ALARME!: string;
-  ID_REPETITION!: string;
   DESCRIPTION!: string;
   ROLE!: string;
   FICHIER!: number;
+  PRIORITE!: number;
 }

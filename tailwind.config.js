@@ -3,10 +3,14 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
-        fontFamily: {
-          inter: ["Inter", "cursive"],
-        }
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
+    },
+    screens: {
+      "2xl": "1920px",
+      // => @media (min-width: 1280px) { ... }
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };

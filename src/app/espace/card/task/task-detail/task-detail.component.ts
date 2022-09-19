@@ -5,13 +5,14 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import * as feather from 'feather-icons';
+import { File } from 'src/app/file/file.model';
+import { FileService } from 'src/app/shared/file.service';
 import { Alarme } from 'src/app/shared/reminder/alarme.model';
 import { AlarmeService } from 'src/app/shared/reminder/alarme.service';
-import { Repetition } from 'src/app/shared/reminder/repetition.model';
 import { TaskService } from 'src/app/shared/task.service';
 import { getUserViaToken, isAdmin } from 'src/app/shared/token.utils';
 import { ValidationComponent } from 'src/app/validation/validation.component';
-import { Task } from '../task.model';
+import { TaskMember } from '../taskMember.model';
 @Component({
   selector: 'app-task-detail',
   templateUrl: './task-detail.component.html',
@@ -22,16 +23,16 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
   debut!: string;
   fin!: string;
   reminderList!: Alarme[];
-  repetitionList!: Repetition[];
   reminder!: string;
-  repetition!: string;
-  showUser: boolean = true;
   disableUpdate: boolean = true;
+  displayedColumns: string[] = ['Titre', 'Link'];
+  fichier: File[] = [];
   constructor(
     public dialogRef: MatDialogRef<TaskDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Task,
+    @Inject(MAT_DIALOG_DATA) public data: TaskMember,
     private alarmService: AlarmeService,
     private taskService: TaskService,
+    private fileService: FileService,
     private dialog: MatDialog
   ) {}
 
@@ -39,19 +40,29 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     this.getAlarmsList();
     this.checkIfUserCanBeShown();
     this.checkIfUserCanUpdate();
+    this.getAllFiles();
   }
   checkIfUserCanBeShown() {
-    console.log(this.data.ROLE);
-    if (this.data.ROLE == 'Anonyme') {
-      this.showUser = false;
-    }
+    this.data.executeur.forEach((element) => {
+      if (element.ROLE == 'Anonyme') {
+        element.shown = false;
+      }
+    });
   }
   checkIfUserCanUpdate() {
     let userConnected = getUserViaToken();
     let myName = userConnected.NOM + ' ' + userConnected.PRENOM;
-    if (this.data.ID_UTILISATEUR == myName || isAdmin()) {
+    const findMe = this.data.executeur.find((ex) => {
+      return ex.ID_UTILISATEUR === myName;
+    });
+    if (findMe || isAdmin()) {
       this.disableUpdate = false;
     }
+  }
+  getAllFiles() {
+    this.fileService.getAllFiles(this.data.tache.ID_TACHE).subscribe((data) => {
+      this.fichier = data.data;
+    });
   }
   ngAfterViewInit(): void {
     feather.replace();
@@ -64,16 +75,12 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
       this.reminderList = data;
       console.log(this.reminderList);
     });
-    this.alarmService.getRepetitions().subscribe((data) => {
-      this.repetitionList = data;
-    });
   }
   updateTask() {
-    this.data.DATE_DEBUT = new Date(this.data.DATE_DEBUT);
-    this.data.DATE_FIN = new Date(this.data.DATE_FIN);
-    this.taskService.updateTaskDetail(this.data).subscribe(
+    this.data.tache.DATE_DEBUT = new Date(this.data.tache.DATE_DEBUT);
+    this.data.tache.DATE_FIN = new Date(this.data.tache.DATE_FIN);
+    this.taskService.updateTaskDetail(this.data.tache).subscribe(
       (data) => {
-        console.log("afterUpdate: ",this.data);
         this.dialogRef.close(this.data);
       },
       (err) => {
