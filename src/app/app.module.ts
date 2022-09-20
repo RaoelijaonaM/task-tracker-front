@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import {MatCardModule} from '@angular/material/card';
 /*************Component*****************************/
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -84,6 +85,7 @@ const routes: Routes = [
     MatMenuModule,
     MatProgressBarModule,
     MatTableModule,
+    MatCardModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable

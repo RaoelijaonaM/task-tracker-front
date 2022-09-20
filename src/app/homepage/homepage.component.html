@@ -1,155 +1,135 @@
-<div class="overflow-x-auto w-full">
-  <table class="table w-full">
-    <!-- head -->
-    <thead>
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <th>Nom</th>
-        <th>Theme</th>
-        <th>Date</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- row 1 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center space-x-3">
-            <div class="avatar placeholder">
-              <div
-                class="bg-neutral-focus text-neutral-content rounded-full w-24"
-              >
-                <span class="text-3xl">K</span>
+<div class="flex gap-1 flex-wrap">
+  <div class="w-[50%]">
+    <div class="m-4 border-b border-black/[0.24] p-2">STATISTIQUE DES ESPACES</div>
+    <table class="table w-full m-4 shadow-2xl">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th>ID_ESPACE</th>
+          <th>THESARD</th>
+          <th>THEME</th>
+          <th>A FAIRE(%)</th>
+          <th>EN COURS(%)</th>
+          <th>TERMINE(%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let esp of espace">
+          <td>
+            <button (click)="getEspace(esp.ID_ESPACE)">
+              {{ esp.ID_ESPACE }}
+            </button>
+          </td>
+          <td>
+            <div class="flex items-center space-x-3">
+              <div class="avatar placehold er">
+                <div
+                  class="bg-neutral-focus text-neutral-content rounded-full w-14 2xl:w-20"
+                >
+                  <span class="text-2xl">{{ esp.INITIAL }}</span>
+                </div>
+              </div>
+              <div>
+                <div class="font-bold">{{ esp.NOM }}</div>
               </div>
             </div>
-            <div>
-              <div class="font-bold">Hart Hagerty</div>
-              <div class="text-sm opacity-50">United States</div>
+          </td>
+  
+          <td>{{ esp.THEME }}</td>
+          <td>
+            <div
+              class="radial-progress text-error"
+              style="--value:{{ esp.TODO }};"
+            >
+              {{ esp.TODO }} %
             </div>
-          </div>
-        </td>
-        <td>
-          Zemlak, Daniel and Leannon
-          <br />
-          <span class="badge badge-ghost badge-sm"
-            >Desktop Support Technician</span
-          >
-        </td>
-        <td>Purple</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 2 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center space-x-3">
-            <div class="avatar">
-              <div class="mask mask-squircle w-12 h-12">
-                <img
-                  src="/tailwind-css-component-profile-3@56w.png"
-                  alt="Avatar Tailwind CSS Component"
-                />
+          </td>
+          <td>
+            <div
+              class="radial-progress text-info"
+              style="--value: {{ esp.PROGRESS }};"
+            >
+              {{ esp.PROGRESS }} %
+            </div>
+          </td>
+  
+          <td>
+            <div
+              class="radial-progress text-success"
+              style="--value: {{ esp.FINISH }};"
+            >
+              {{ esp.FINISH }} %
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+ <div class="w-[50%]">
+  <div class="m-4 border-b border-black/[0.24] p-2">STATISTIQUE DES ESPACES</div>
+    <table class="table w-full">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th>ID_ESPACE</th>
+          <th>THESARD</th>
+          <th>THEME</th>
+          <th>A FAIRE(%)</th>
+          <th>EN COURS(%)</th>
+          <th>TERMINE(%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let esp of espace">
+          <td>
+            <button (click)="getEspace(esp.ID_ESPACE)">
+              {{ esp.ID_ESPACE }}
+            </button>
+          </td>
+          <td>
+            <div class="flex items-center space-x-3">
+              <div class="avatar placeholder">
+                <div
+                  class="bg-neutral-focus text-neutral-content rounded-full w-14 2xl:w-20"
+                >
+                  <span class="text-2xl">{{ esp.INITIAL }}</span>
+                </div>
+              </div>
+              <div>
+                <div class="font-bold">{{ esp.NOM }}</div>
               </div>
             </div>
-            <div>
-              <div class="font-bold">Brice Swyre</div>
-              <div class="text-sm opacity-50">China</div>
+          </td>
+  
+          <td>{{ esp.THEME }}</td>
+          <td>
+            <div
+              class="radial-progress text-error"
+              style="--value:{{ esp.TODO }};"
+            >
+              {{ esp.TODO }} %
             </div>
-          </div>
-        </td>
-        <td>
-          Carroll Group
-          <br />
-          <span class="badge badge-ghost badge-sm">Tax Accountant</span>
-        </td>
-        <td>Red</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 3 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center space-x-3">
-            <div class="avatar">
-              <div class="mask mask-squircle w-12 h-12">
-                <img
-                  src="/tailwind-css-component-profile-4@56w.png"
-                  alt="Avatar Tailwind CSS Component"
-                />
-              </div>
+          </td>
+          <td>
+            <div
+              class="radial-progress text-info"
+              style="--value: {{ esp.PROGRESS }};"
+            >
+              {{ esp.PROGRESS }} %
             </div>
-            <div>
-              <div class="font-bold">Marjy Ferencz</div>
-              <div class="text-sm opacity-50">Russia</div>
+          </td>
+  
+          <td>
+            <div
+              class="radial-progress text-success"
+              style="--value: {{ esp.FINISH }};"
+            >
+              {{ esp.FINISH }} %
             </div>
-          </div>
-        </td>
-        <td>
-          Rowe-Schoen
-          <br />
-          <span class="badge badge-ghost badge-sm">Office Assistant I</span>
-        </td>
-        <td>Crimson</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 4 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center space-x-3">
-            <div class="avatar">
-              <div class="mask mask-squircle w-12 h-12">
-                <img
-                  src="/tailwind-css-component-profile-5@56w.png"
-                  alt="Avatar Tailwind CSS Component"
-                />
-              </div>
-            </div>
-            <div>
-              <div class="font-bold">Yancy Tear</div>
-              <div class="text-sm opacity-50">Brazil</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Wyman-Ledner
-          <br />
-          <span class="badge badge-ghost badge-sm"
-            >Community Outreach Specialist</span
-          >
-        </td>
-        <td>Indigo</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-    </tbody>
-  </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+

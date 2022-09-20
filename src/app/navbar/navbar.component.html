@@ -46,9 +46,6 @@
     </div>
 
     <div class="navbar-end">
-      <div class="h-[40px] w-[40px] rounded-full bg-orange-500 m-2"></div>
-      <div>{{ userSession.PRENOM + " " + userSession.NOM }}</div>
-
       <button class="btn btn-ghost btn-circle">
         <div class="indicator">
           <svg
@@ -68,10 +65,13 @@
           <span class="badge badge-xs badge-primary indicator-item"></span>
         </div>
       </button>
-      <button class="mr-6">
+      <button class="mr-7">
         <i data-feather="mail"> </i>
       </button>
-      <button (click)="disconnect()">
+      <div class="h-[40px] w-[40px] rounded-full bg-orange-500 m-2"></div>
+      <div class="mr-6">{{ userSession.PRENOM + " " + userSession.NOM }}</div>
+
+      <button class="mr-2 text-red-600" (click)="disconnect()">
         <i data-feather="power"></i>
       </button>
     </div>

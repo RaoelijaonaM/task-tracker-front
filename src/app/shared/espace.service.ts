@@ -37,4 +37,12 @@ export class EspaceService {
     let url = environment.api + 'notifs/';
     return this.http.get<any>(url);
   }
+  getEtudiantEspace(iduser:string):Observable<any>{
+    let url=environment.api+'espace/'+iduser;
+    return this.http.get<any>(url);
+  }
+  getAllEspace():Observable<any>{
+    let url=environment.api+'espaces/';
+    return this.http.get<any>(url);
+  }
 }
