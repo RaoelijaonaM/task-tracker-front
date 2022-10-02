@@ -1,73 +1,9 @@
 <div class="flex gap-1 flex-wrap">
   <div class="w-[50%]">
-    <div class="m-4 border-b border-black/[0.24] p-2">STATISTIQUE DES ESPACES</div>
+    <div class="m-4 border-b border-black/[0.24] p-2">
+      STATISTIQUE DES ESPACES
+    </div>
     <table class="table w-full m-4 shadow-2xl">
-      <!-- head -->
-      <thead>
-        <tr>
-          <th>ID_ESPACE</th>
-          <th>THESARD</th>
-          <th>THEME</th>
-          <th>A FAIRE(%)</th>
-          <th>EN COURS(%)</th>
-          <th>TERMINE(%)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let esp of espace">
-          <td>
-            <button (click)="getEspace(esp.ID_ESPACE)">
-              {{ esp.ID_ESPACE }}
-            </button>
-          </td>
-          <td>
-            <div class="flex items-center space-x-3">
-              <div class="avatar placehold er">
-                <div
-                  class="bg-neutral-focus text-neutral-content rounded-full w-14 2xl:w-20"
-                >
-                  <span class="text-2xl">{{ esp.INITIAL }}</span>
-                </div>
-              </div>
-              <div>
-                <div class="font-bold">{{ esp.NOM }}</div>
-              </div>
-            </div>
-          </td>
-  
-          <td>{{ esp.THEME }}</td>
-          <td>
-            <div
-              class="radial-progress text-error"
-              style="--value:{{ esp.TODO }};"
-            >
-              {{ esp.TODO }} %
-            </div>
-          </td>
-          <td>
-            <div
-              class="radial-progress text-info"
-              style="--value: {{ esp.PROGRESS }};"
-            >
-              {{ esp.PROGRESS }} %
-            </div>
-          </td>
-  
-          <td>
-            <div
-              class="radial-progress text-success"
-              style="--value: {{ esp.FINISH }};"
-            >
-              {{ esp.FINISH }} %
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
- <div class="w-[50%]">
-  <div class="m-4 border-b border-black/[0.24] p-2">STATISTIQUE DES ESPACES</div>
-    <table class="table w-full">
       <!-- head -->
       <thead>
         <tr>
@@ -100,7 +36,7 @@
               </div>
             </div>
           </td>
-  
+
           <td>{{ esp.THEME }}</td>
           <td>
             <div
@@ -118,7 +54,7 @@
               {{ esp.PROGRESS }} %
             </div>
           </td>
-  
+
           <td>
             <div
               class="radial-progress text-success"
@@ -131,5 +67,10 @@
       </tbody>
     </table>
   </div>
+  <div class="w-[50%]">
+    <div class="m-4 border-b border-black/[0.24] p-2 uppercase ">
+      Calendrier de soutenance pour cette semaine
+    </div>
+    <app-calendrier></app-calendrier>
+  </div>
 </div>
-

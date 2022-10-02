@@ -27,7 +27,9 @@
 
               <td>
                 <div class="w-[100px] bg-green-500 text-center text-white rounded-full text-xs font-semibold" *ngIf="d.etat==1; else nonok">COMPLET</div>
-                <ng-template class="w-[100px] bg-red-500 text-center text-white rounded-full text-xs font-semibold" #nonok>INCOMPLET</ng-template>
+                <ng-template #nonok>
+                  <div class="w-[100px] bg-red-700 text-center text-white rounded-full text-xs font-semibold"> INCOMPLET</div>
+                </ng-template>
             </td>
 
             </tr>
@@ -35,9 +37,8 @@
         </table>
       </div>
     </mat-card-content>
-    <!-- <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
-          </mat-card-actions> -->
+    <mat-card-actions class="relative">
+      <button class="border w-[100px] bg-orange-700  text-white shadow-xl ml-1 rounded-md" mat-button>Modifier</button>
+  </mat-card-actions>
   </mat-card>
 </div>

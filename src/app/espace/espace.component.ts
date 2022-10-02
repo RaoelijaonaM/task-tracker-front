@@ -7,7 +7,6 @@ import * as io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 import { Discussion } from '../discussion/discussion.model';
 import { EspaceService } from '../shared/espace.service';
-import { NavbarService } from '../shared/navbar.service';
 import { TaskService } from '../shared/task.service';
 import { getUserViaToken } from '../shared/token.utils';
 import { ValidationComponent } from '../validation/validation.component';
@@ -35,18 +34,16 @@ export class EspaceComponent implements OnInit, AfterViewInit {
   messageList: Discussion[] = [];
   message: string = '';
   socket!: any;
-  notification:number=0;
+  notification: number = 0;
   constructor(
     private taskService: TaskService,
     private espaceService: EspaceService,
-    private dialog: MatDialog,
-    private navbarservice: NavbarService
+    private dialog: MatDialog
   ) {}
   ngAfterViewInit(): void {
     feather.replace();
   }
   ngOnInit(): void {
-    this.navbarservice.show();
     console.log('espace connection');
     console.log(this.userSession);
     this.getTasksList();
@@ -108,7 +105,11 @@ export class EspaceComponent implements OnInit, AfterViewInit {
     this.espaceService.getDetails().subscribe((res: any) => {
       this.espace = res.data[0];
     });
-    this.espaceService.getMembers().subscribe((res: any) => {
+    let idespace = '';
+    if(sessionStorage.getItem('espace')){
+      idespace = sessionStorage.getItem('espace')!;
+    }
+    this.espaceService.getMembers(idespace).subscribe((res: any) => {
       this.membre = res.data;
       this.isAnonym = this.checkIfUserAnonym();
       this.membreAffiche = this.membre.filter((data: any) => {
@@ -118,8 +119,8 @@ export class EspaceComponent implements OnInit, AfterViewInit {
       this.getUserConnected();
     });
   }
-  notified(isa:number){
-    console.log("*************notif2: ");
+  notified(isa: number) {
+    console.log('*************notif2: ');
     this.notification += isa;
   }
   getTasksList() {

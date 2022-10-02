@@ -3,4 +3,5 @@ export class Executeur {
   PRIORITE!: number;
   ROLE!: string;
   shown: boolean = true;
+  libelle:string='';
 }

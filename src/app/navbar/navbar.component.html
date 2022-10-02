@@ -1,5 +1,4 @@
 <div
-  *ngIf="navservice.visible"
   class="bg-[#2B3240] min-h-[5%] w-full flex shadow-2xl text-white sticky top-0 z-50"
 >
   <div class="navbar">
@@ -69,7 +68,9 @@
         <i data-feather="mail"> </i>
       </button>
       <div class="h-[40px] w-[40px] rounded-full bg-orange-500 m-2"></div>
-      <div class="mr-6">{{ userSession.PRENOM + " " + userSession.NOM }}</div>
+      <div *ngIf="userSession" class="mr-6">
+        {{ userSession.PRENOM + " " + userSession.NOM }}
+      </div>
 
       <button class="mr-2 text-red-600" (click)="disconnect()">
         <i data-feather="power"></i>
@@ -77,3 +78,6 @@
     </div>
   </div>
 </div>
+<script>
+  feather.replace();
+</script>

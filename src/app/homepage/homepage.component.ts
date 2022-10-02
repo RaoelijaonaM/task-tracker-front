@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as feather from 'feather-icons';
 
 import { EspaceService } from '../shared/espace.service';
 import { NavbarService } from '../shared/navbar.service';
@@ -19,7 +20,6 @@ export class HomepageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.navbarservice.show();
     this.getAllSpaces();
   }
   getEspace(idespace: string) {

@@ -3,8 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 /***********************Module************************/
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -13,11 +14,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import {MatCardModule} from '@angular/material/card';
 /*************Component*****************************/
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -40,7 +42,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthGuard } from './shared/auth.guard';
 import { ValidationComponent } from './validation/validation.component';
-
+import { CalendrierComponent } from './homepage/calendrier/calendrier.component';
 const routes: Routes = [
   { path: '', component: AuthentificationComponent },
   { path: 'home', component: HomepageComponent },
@@ -65,6 +67,7 @@ const routes: Routes = [
     NavbarComponent,
     CreerespaceComponent,
     DossierComponent,
+    CalendrierComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +88,10 @@ const routes: Routes = [
     MatMenuModule,
     MatProgressBarModule,
     MatTableModule,
+    MatStepperModule,
     MatCardModule,
+    MatRadioModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable

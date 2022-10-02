@@ -22,12 +22,9 @@ export class AuthentificationComponent implements OnInit {
     private authService: AuthentificationService,
     private route: Router,
     private espaceService: EspaceService,
-    private navbarservice: NavbarService
   ) {}
 
-  ngOnInit(): void {
-    this.navbarservice.hide();
-  }
+  ngOnInit(): void {}
   authenticate() {
     this.isLoading = true;
     this.authService.signIn(this.pseudo, this.pwd).subscribe(

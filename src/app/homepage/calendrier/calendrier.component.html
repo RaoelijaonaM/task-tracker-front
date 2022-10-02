@@ -1,0 +1,27 @@
+<div>
+    <table class="table w-full m-4 shadow-2xl">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Heure</th>     
+            <th>Thesard</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cal of calendriers">
+            <td>
+             {{cal.DATE_SOUTENANCE | date:'EEEE d MMMM y'}} 
+            </td>
+            <td>
+                {{cal.DATE_SOUTENANCE | date:'h:mm:dd'}} 
+            </td>
+            <td>
+              {{cal.ID_UTILISATEUR}}
+            </td>
+  
+          </tr>
+        </tbody>
+      </table> 
+</div>
