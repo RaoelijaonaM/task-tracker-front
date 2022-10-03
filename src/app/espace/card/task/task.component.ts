@@ -20,6 +20,7 @@ export class TaskComponent implements OnInit, AfterViewInit {
   @Input() task: TaskMember = new TaskMember();
   disable: boolean = true;
   disableUpdate: boolean = true;
+  alarm: boolean = false;
   constructor(
     public dialog: MatDialog,
     private taskService: TaskService,
@@ -29,7 +30,7 @@ export class TaskComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.checkTaskIfCanBeDragAndTaskDetailled();
     this.ckeckTaskIfCanBeDetailled();
-    //  this.pushNotifIfTodayAlarm();
+    this.checkTaskDeadline();
   }
   ngAfterViewInit(): void {
     feather.replace();
@@ -56,7 +57,38 @@ export class TaskComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  checkTaskDeadline() {
+    if (this.task.tache.STATUS == 0) {
+      let dtTask = new Date(this.task.tache.DATE_FIN);
+      dtTask.setHours(0, 0, 0, 0);
+      let semaineApres = new Date();
+      semaineApres.setHours(0, 0, 0, 0);
+      let diff = semaineApres.getTime() - dtTask.getTime();
+      let diffDay = diff / (1000 * 60 * 60 * 24);
+      console.log(diffDay + 'jours');
+      if (diffDay >= 7) {
+        this.alarm = true;
+        //send mail to all members
 
+        // let membres = this.task.executeur;
+        // membres.forEach((element) => {
+        //   this.espaceService.sendMailto(element.MAIL).subscribe((data) => {
+        //     console.log('data', data);
+        //   });
+        // });
+
+        this.espaceService
+          .sendMailto('raoeladrien@gmail.com')
+          .subscribe((data) => {
+            console.log('data', data);
+          });
+      } else {
+        this.alarm = false;
+      }
+    } else {
+      this.alarm = false;
+    }
+  }
   openDetail() {
     this.taskService
       .getTaskDetail(this.task.tache.ID_TACHE)
@@ -83,15 +115,30 @@ export class TaskComponent implements OnInit, AfterViewInit {
           width: '40%',
           data: taskm,
         });
-      //   dialogRef.componentInstance.notified.subscribe(result => {
-      //     console.log('Got the data!', result);
-      // });
+        //   dialogRef.componentInstance.notified.subscribe(result => {
+        //     console.log('Got the data!', result);
+        // });
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
+            let taskTemp = this.task;
             this.task = result;
-            this.task.tache.DATE_FIN.setDate(
-              this.task.tache.DATE_FIN.getDate() - 1
-            );
+            if (
+              taskTemp.tache.DATE_FIN.getTime() !=
+              this.task.tache.DATE_FIN.getTime()
+            ) {
+              this.task.tache.DATE_FIN.setDate(
+                this.task.tache.DATE_FIN.getDate() - 1
+              );
+            }
+            if (
+              taskTemp.tache.DATE_DEBUT.getTime() !=
+              this.task.tache.DATE_DEBUT.getTime()
+            ) {
+              this.task.tache.DATE_DEBUT.setDate(
+                this.task.tache.DATE_DEBUT.getDate() - 1
+              );
+            }
+            this.checkTaskDeadline();
           }
         });
       });

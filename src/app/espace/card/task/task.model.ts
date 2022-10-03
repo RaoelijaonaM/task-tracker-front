@@ -11,4 +11,5 @@ export class Task {
   ROLE!: string;
   FICHIER!: number;
   PRIORITE!: number;
+  MAIL!: string;
 }

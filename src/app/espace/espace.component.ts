@@ -160,6 +160,7 @@ export class EspaceComponent implements OnInit, AfterViewInit {
           res.ID_UTILISATEUR = value.ID_UTILISATEUR;
           res.PRIORITE = value.PRIORITE;
           res.ROLE = value.ROLE;
+          res.MAIL = value.MAIL;
           tache.executeur.push(res);
         });
         if (tache.tache.STATUS === 0) {

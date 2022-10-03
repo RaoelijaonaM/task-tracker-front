@@ -18,7 +18,7 @@ export class EspaceService {
     let url = environment.api + '/space/' + id_space;
     return this.http.get<Membre[]>(url);
   }
-  getMembers(id_space:string): Observable<any> {
+  getMembers(id_space: string): Observable<any> {
     let url = environment.api + '/members/' + id_space;
     return this.http.get<any>(url);
   }
@@ -81,8 +81,8 @@ export class EspaceService {
     let url = environment.api + 'creer';
     return this.http.post<any>(url, body);
   }
-  getTaskOflast(idespace:string): Observable<any> {
-    let url = environment.api + 'lasttasks/'+idespace;
+  getTaskOflast(idespace: string): Observable<any> {
+    let url = environment.api + 'lasttasks/' + idespace;
     return this.http.get<any>(url);
   }
   insertResponsable(resps: TaskMember[]): Observable<any> {
@@ -98,6 +98,13 @@ export class EspaceService {
     });
     console.log('body: ', body);
     let url = environment.api + 'ajoutResponsable';
+    return this.http.post<any>(url, body);
+  }
+  sendMailto(membre: string): Observable<any> {
+    let body: any = {
+      email: membre,
+    };
+    let url = environment.api + 'sendmail';
     return this.http.post<any>(url, body);
   }
 }

@@ -1,5 +1,9 @@
 <div
-  class="w-full bg-white min-h-[120px] p-2 mt-4 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] relative"
+[ngClass]="{
+  'bg-red-600 text-white': alarm,
+  'bg-white': alarm === false
+}"
+  class="w-full  min-h-[120px] p-2 mt-4 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] relative"
   cdkDrag
   [cdkDragDisabled]="disable"
 >
