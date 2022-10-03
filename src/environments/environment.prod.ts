@@ -10,7 +10,7 @@ export const environment = {
     measurementId: 'G-03D671625P',
   },
   production: true,
-  api: 'http://localhost:3000/api/',
+  api: 'https://api-lartic.herokuapp.com/api/',
 
   socket: 'https://socket-lartic.herokuapp.com/',
 };
